@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 )
 
 func response200(w http.ResponseWriter, r *http.Request, result any) {
@@ -34,13 +33,4 @@ func response500(w http.ResponseWriter, r *http.Request, err error) {
 
 func errorResponse(w http.ResponseWriter, message string, status int) {
 	http.Error(w, fmt.Sprintf(`{"error": "%s"}`, message), status)
-}
-
-func getQueryParam(r *http.Request, param string) (string, bool) {
-	value := strings.TrimSpace(strings.ToLower(r.URL.Query().Get(param)))
-	if value != "" {
-		return value, true
-	} else {
-		return value, false
-	}
 }
