@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"language-backend/model"
 	"math/rand"
+	"strings"
 )
 
 const (
@@ -32,6 +34,35 @@ func NewDatabase() (*Database, error) {
 
 func (db *Database) Close() {
 	db.db.Close()
+}
+
+func (db *Database) FindConjugation(tense model.Tense, pronoun model.Pronoun, verb string) (string, error) {
+	query := fmt.Sprintf("SELECT %s FROM verbs WHERE infinitive = ?", getColumnName(tense, pronoun))
+	row := db.db.QueryRow(query, verb)
+
+	var conjugation string
+	err := row.Scan(&conjugation)
+
+	return conjugation, mapError(err)
+}
+
+func getColumnName(tense model.Tense, pronoun model.Pronoun) string {
+	p := ""
+	switch pronoun {
+	case model.FirstPersonalSingular:
+		p = "fps"
+	case model.SecondPersonalSingular:
+		p = "sps"
+	case model.ThirdPersonalSingular:
+		p = "tps"
+	case model.FirstPersonalPlural:
+		p = "fpp"
+	case model.SecondPersonalPlural:
+		p = "spp"
+	case model.ThirdPersonalPlural:
+		p = "tpp"
+	}
+	return fmt.Sprintf("%s_%s", strings.ToLower(string(tense)), p)
 }
 
 func (db *Database) FindVerb(verb string) (VerbRow, error) {

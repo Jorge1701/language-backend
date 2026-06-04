@@ -35,6 +35,7 @@ func main() {
 
 	endpointHandler := endpoints.NewEndpointHandler(db)
 
+	mux.HandleFunc("/verb/exercise", endpointHandler.VerbExercise)
 	mux.HandleFunc("/verb/random", endpointHandler.VerbRandom)
 	mux.HandleFunc("/verb/list", endpointHandler.VerbList)
 	mux.HandleFunc("/verb/{verb}", endpointHandler.VerbDetails)
