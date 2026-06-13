@@ -1,5 +1,7 @@
 package model
 
+import "fmt"
+
 type Tense string
 
 const (
@@ -48,11 +50,21 @@ func (p Pronoun) IsValid() bool {
 	return validPronouns[p]
 }
 
+type ExerciseExample struct {
+	Pt string `json:"pt,omitempty"`
+	Es string `json:"es,omitempty"`
+}
+
+func (e *ExerciseExample) String() string {
+	return fmt.Sprintf("{%s %s}", e.Pt, e.Es)
+}
+
 type VerbExerciseInfo struct {
-	Tense       Tense   `json:"tense"`
-	Pronoun     Pronoun `json:"pronoun"`
-	Verb        string  `json:"verb"`
-	Conjugation string  `json:"conjugation"`
+	Tense       Tense            `json:"tense"`
+	Pronoun     string           `json:"pronoun"`
+	Verb        string           `json:"verb"`
+	Conjugation string           `json:"conjugation"`
+	Example     *ExerciseExample `json:"example,omitempty"`
 }
 
 type VerbInfo struct {

@@ -99,3 +99,24 @@ func (db *Database) FindRandomVerb(topSearched int) (VerbRow, error) {
 
 	return extractVerbRow(row)
 }
+
+func (db *Database) FindVerbExample(pronoun, conjugation string) ([]ExampleRow, error) {
+	search := fmt.Sprintf("%s %s", pronoun, conjugation)
+	query := `SELECT pt, es FROM examples WHERE lower(pt) like ?`
+
+	rows, err := db.db.Query(query, "%"+search+"%")
+	if err != nil {
+		return nil, err
+	}
+
+	examples := []ExampleRow{}
+	for rows.Next() {
+		var example ExampleRow
+		if err := rows.Scan(&example.Pt, &example.Es); err != nil {
+			return nil, err
+		}
+		examples = append(examples, example)
+	}
+
+	return examples, nil
+}

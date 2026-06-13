@@ -4,6 +4,7 @@ import (
 	"errors"
 	"language-backend/database"
 	"language-backend/model"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"strings"
@@ -56,11 +57,18 @@ func (h *Handler) VerbExercise(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if strings.TrimSpace(conjugation) == "" {
+		response404(w, r, "Could not find conjugation")
+		return
+	}
+
+	pronoun := getPronounText(pronounParam)
 	verbExerciseInfo := model.VerbExerciseInfo{
 		Tense:       tenseParam,
-		Pronoun:     pronounParam,
+		Pronoun:     pronoun,
 		Verb:        verbParam,
 		Conjugation: conjugation,
+		Example:     h.findExample(pronoun, conjugation),
 	}
 
 	response200(w, r, verbExerciseInfo)
@@ -72,4 +80,60 @@ func handleError(w http.ResponseWriter, r *http.Request, err error) {
 	} else {
 		response500(w, r, err)
 	}
+}
+
+func (h *Handler) findExample(pronoun, conjugation string) *model.ExerciseExample {
+	examples, err := h.db.FindVerbExample(pronoun, conjugation)
+	if err != nil {
+		return nil
+	}
+
+	curatedExamples := []model.ExerciseExample{}
+
+	for _, example := range examples {
+		parts := strings.Split(strings.ToLower(strings.TrimSpace(example.Pt)), " ")
+
+	parts_loop:
+		for i, part := range parts {
+			if part == pronoun {
+				if len(parts) > i+1 && parts[i+1] == conjugation {
+					curatedExamples = append(curatedExamples, model.ExerciseExample{
+						Pt: example.Pt,
+						Es: example.Es,
+					})
+				}
+
+				break parts_loop
+			}
+		}
+	}
+
+	if len(curatedExamples) == 0 {
+		return nil
+	}
+
+	return &curatedExamples[rand.Intn(len(curatedExamples))]
+}
+
+var (
+	tps = []string{"você", "ele", "ela"}
+	tpp = []string{"vocês", "eles", "elas"}
+)
+
+func getPronounText(pronoun model.Pronoun) string {
+	switch pronoun {
+	case model.FirstPersonalSingular:
+		return "eu"
+	case model.SecondPersonalSingular:
+		return "tu"
+	case model.ThirdPersonalSingular:
+		return tps[rand.Intn(3)]
+	case model.FirstPersonalPlural:
+		return "nós"
+	case model.SecondPersonalPlural:
+		return "vós"
+	case model.ThirdPersonalPlural:
+		return tpp[rand.Intn(3)]
+	}
+	return "-"
 }
