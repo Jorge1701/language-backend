@@ -7,7 +7,7 @@ import (
 )
 
 func response200(w http.ResponseWriter, r *http.Request, result any) {
-	fmt.Printf("200 - %s\n", r.URL)
+	fmt.Printf("200 - %s\n%v\n", r.URL, result)
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(result)

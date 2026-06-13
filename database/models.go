@@ -43,3 +43,8 @@ type VerbRow struct {
 	ConditionalSPP    string `json:"conditional_spp"`
 	ConditionalTPP    string `json:"conditional_tpp"`
 }
+
+type ExampleRow struct {
+	Pt string
+	Es string
+}
