@@ -41,5 +41,8 @@ func main() {
 	mux.HandleFunc("/verb/{verb}", endpointHandler.VerbDetails)
 
 	handler := enableCORS(mux)
-	http.ListenAndServe(":8080", handler)
+	err = http.ListenAndServe(":8080", handler)
+	if err != nil {
+		panic(err)
+	}
 }

@@ -30,9 +30,9 @@ const (
 	FirstPersonalSingular  Pronoun = "FIRST_PERSON_SINGULAR"
 	SecondPersonalSingular Pronoun = "SECOND_PERSON_SINGULAR"
 	ThirdPersonalSingular  Pronoun = "THIRD_PERSON_SINGULAR"
-	FirstPersonalPlural    Pronoun = "FIRST_PERSON_PLULAR"
-	SecondPersonalPlural   Pronoun = "SECOND_PERSON_PLULAR"
-	ThirdPersonalPlural    Pronoun = "THIRD_PERSON_PLULAR"
+	FirstPersonalPlural    Pronoun = "FIRST_PERSON_PLURAL"
+	SecondPersonalPlural   Pronoun = "SECOND_PERSON_PLURAL"
+	ThirdPersonalPlural    Pronoun = "THIRD_PERSON_PLURAL"
 )
 
 var validPronouns = map[Pronoun]bool{
