@@ -6,6 +6,12 @@ import (
 	"net/http"
 )
 
+func response(w http.ResponseWriter, r *http.Request, status int) {
+	fmt.Printf("%d - %s\n", status, r.URL)
+
+	w.WriteHeader(status)
+}
+
 func response200(w http.ResponseWriter, r *http.Request, result any) {
 	fmt.Printf("200 - %s\n%v\n", r.URL, result)
 
@@ -19,10 +25,28 @@ func response400(w http.ResponseWriter, r *http.Request, message string) {
 	errorResponse(w, message, http.StatusBadRequest)
 }
 
+func response401(w http.ResponseWriter, r *http.Request, message string) {
+	fmt.Printf("401 - %s - %s\n", r.URL, message)
+
+	errorResponse(w, message, http.StatusUnauthorized)
+}
+
 func response404(w http.ResponseWriter, r *http.Request, message string) {
 	fmt.Printf("404 - %s - %s\n", r.URL, message)
 
 	errorResponse(w, message, http.StatusNotFound)
+}
+
+func response409(w http.ResponseWriter, r *http.Request, message string) {
+	fmt.Printf("409 - %s - %s\n", r.URL, message)
+
+	errorResponse(w, message, http.StatusConflict)
+}
+
+func response429(w http.ResponseWriter, r *http.Request, message string) {
+	fmt.Printf("429 - %s - %s\n", r.URL, message)
+
+	errorResponse(w, message, http.StatusTooManyRequests)
 }
 
 func response500(w http.ResponseWriter, r *http.Request, err error) {
