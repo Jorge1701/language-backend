@@ -16,7 +16,7 @@ func headersMiddleware(isProd bool, next http.Handler) http.Handler {
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
 		if isProd {
-			// Cloudflare handles HSTS, you just lock down CORS
+			// Cloudflare handles HSTS, just lock down CORS
 			w.Header().Set("Access-Control-Allow-Origin", "https://portugues.rosasjorge.xyz")
 		} else {
 			w.Header().Set("Access-Control-Allow-Origin", "*")
