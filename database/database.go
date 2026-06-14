@@ -76,14 +76,14 @@ func (db *Database) ListVerbs(limit int) ([]string, error) {
 	query := `SELECT infinitive FROM verbs LIMIT ?`
 	rows, err := db.db.Query(query, limit)
 	if err != nil {
-		return nil, err
+		return nil, mapError(err)
 	}
 
 	verbs := []string{}
 	for rows.Next() {
 		var verb string
 		if err := rows.Scan(&verb); err != nil {
-			return nil, err
+			return nil, mapError(err)
 		}
 		verbs = append(verbs, verb)
 	}
@@ -106,17 +106,39 @@ func (db *Database) FindVerbExample(pronoun, conjugation string) ([]ExampleRow, 
 
 	rows, err := db.db.Query(query, "%"+search+"%")
 	if err != nil {
-		return nil, err
+		return nil, mapError(err)
 	}
 
 	examples := []ExampleRow{}
 	for rows.Next() {
 		var example ExampleRow
 		if err := rows.Scan(&example.Pt, &example.Es); err != nil {
-			return nil, err
+			return nil, mapError(err)
 		}
 		examples = append(examples, example)
 	}
 
 	return examples, nil
+}
+
+func (db *Database) FindUserByUsername(username string) (User, error) {
+	query := `SELECT id, username, password, created_at, updated_at FROM users WHERE username = ?`
+	row := db.db.QueryRow(query, username)
+
+	var user User
+	err := row.Scan(&user.Id, &user.Username, &user.Password, &user.CreatedAt, &user.UpdatedAt)
+	if err != nil {
+		return User{}, mapError(err)
+	}
+
+	return user, nil
+}
+
+func (db *Database) CreateNewUser(username, password string) error {
+	_, err := db.db.Exec(
+		`INSERT INTO users (username, password) VALUES ($1, $2)`,
+		username, password,
+	)
+
+	return mapError(err)
 }
