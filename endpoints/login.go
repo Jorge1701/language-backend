@@ -73,5 +73,15 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response200(w, r, map[string]string{"token": signed})
+	http.SetCookie(w, &http.Cookie{
+		Name:     "auth_token",
+		Value:    signed,
+		HttpOnly: true,
+		Secure:   h.isProd,
+		SameSite: http.SameSiteStrictMode,
+		Path:     "/",
+		MaxAge:   86400,
+	})
+
+	response(w, r, http.StatusOK)
 }

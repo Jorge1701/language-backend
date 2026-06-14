@@ -5,11 +5,13 @@ import (
 )
 
 type Handler struct {
-	db *database.Database
+	db     *database.Database
+	isProd bool
 }
 
-func NewEndpointHandler(db *database.Database) *Handler {
+func NewEndpointHandler(db *database.Database, isProd bool) *Handler {
 	return &Handler{
-		db: db,
+		db:     db,
+		isProd: isProd,
 	}
 }
