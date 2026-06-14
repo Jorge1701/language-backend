@@ -54,9 +54,7 @@ func main() {
 	mux.Handle("GET /me", endpointHandler.AuthRequired(
 		http.HandlerFunc(endpointHandler.Me),
 	))
-	mux.Handle("GET /verb/exercise", endpointHandler.AuthRequired(
-		http.HandlerFunc(endpointHandler.VerbExercise),
-	))
+	mux.HandleFunc("GET /verb/exercise", endpointHandler.VerbExercise)
 	mux.HandleFunc("GET /verb/random", endpointHandler.VerbRandom)
 	mux.HandleFunc("GET /verb/list", endpointHandler.VerbList)
 	mux.HandleFunc("GET /verb/{verb}", endpointHandler.VerbDetails)
