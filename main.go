@@ -13,12 +13,11 @@ import (
 func headersMiddleware(isProd bool, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
 		if isProd {
+			// Cloudflare handles HSTS, you just lock down CORS
 			w.Header().Set("Access-Control-Allow-Origin", "https://portugues.rosasjorge.xyz")
-			w.Header().Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
 		} else {
 			w.Header().Set("Access-Control-Allow-Origin", "*")
 		}
@@ -50,13 +49,13 @@ func main() {
 
 	endpointHandler := endpoints.NewEndpointHandler(db)
 
-	mux.HandleFunc("/login", endpointHandler.Login)
-	mux.HandleFunc("/register", endpointHandler.Register)
+	mux.HandleFunc("POST /login", endpointHandler.Login)
+	mux.HandleFunc("POST /register", endpointHandler.Register)
 
-	mux.HandleFunc("/verb/exercise", endpointHandler.VerbExercise)
-	mux.HandleFunc("/verb/random", endpointHandler.VerbRandom)
-	mux.HandleFunc("/verb/list", endpointHandler.VerbList)
-	mux.HandleFunc("/verb/{verb}", endpointHandler.VerbDetails)
+	mux.HandleFunc("GET /verb/exercise", endpointHandler.VerbExercise)
+	mux.HandleFunc("GET /verb/random", endpointHandler.VerbRandom)
+	mux.HandleFunc("GET /verb/list", endpointHandler.VerbList)
+	mux.HandleFunc("GET /verb/{verb}", endpointHandler.VerbDetails)
 
 	isProd := os.Getenv("APP_ENV") == "prod"
 	handler := headersMiddleware(isProd, mux)
