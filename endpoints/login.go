@@ -19,8 +19,8 @@ type Claims struct {
 }
 
 type LoginRequest struct {
-	Username string `string:"username"`
-	Password string `string:"password"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
