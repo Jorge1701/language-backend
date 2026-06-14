@@ -22,6 +22,16 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if len(req.Username) < 5 || len(req.Username) > 50 {
+		response400(w, r, "username must be between 3 and 50 characters.")
+		return
+	}
+
+	if len(req.Password) < 8 {
+		response400(w, r, "password must be at least 8 characters.")
+		return
+	}
+
 	_, err = h.db.FindUserByUsername(req.Username)
 	if !errors.Is(err, database.ErrNotFoundInDB) {
 		response409(w, r, "Username already taken.")
