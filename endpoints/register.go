@@ -5,8 +5,10 @@ import (
 	"errors"
 	"language-backend/database"
 	"net/http"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/time/rate"
 )
 
 type RegisterReq struct {
@@ -14,7 +16,16 @@ type RegisterReq struct {
 	Password string `json:"password"`
 }
 
+var (
+	registerLimiter = rate.NewLimiter(rate.Every(time.Second*3), 1)
+)
+
 func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
+	if !registerLimiter.Allow() {
+		response429(w, r, "Too many requests.")
+		return
+	}
+
 	var req RegisterReq
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {

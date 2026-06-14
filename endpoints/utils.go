@@ -43,6 +43,12 @@ func response409(w http.ResponseWriter, r *http.Request, message string) {
 	errorResponse(w, message, http.StatusConflict)
 }
 
+func response429(w http.ResponseWriter, r *http.Request, message string) {
+	fmt.Printf("429 - %s - %s\n", r.URL, message)
+
+	errorResponse(w, message, http.StatusTooManyRequests)
+}
+
 func response500(w http.ResponseWriter, r *http.Request, err error) {
 	fmt.Printf("500 - %s - %v\n", r.URL, err)
 

@@ -10,6 +10,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/time/rate"
 )
 
 type Claims struct {
@@ -23,7 +24,16 @@ type LoginRequest struct {
 	Password string `json:"password"`
 }
 
+var (
+	loginLimiter = rate.NewLimiter(rate.Every(time.Second), 1)
+)
+
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
+	if !loginLimiter.Allow() {
+		response429(w, r, "Too many requests.")
+		return
+	}
+
 	var req LoginRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {

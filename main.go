@@ -60,7 +60,8 @@ func main() {
 
 	isProd := os.Getenv("APP_ENV") == "prod"
 	handler := headersMiddleware(isProd, mux)
-	err = http.ListenAndServe(":56789", handler)
+
+	err = http.ListenAndServe(":"+os.Getenv("SERVER_PORT"), handler)
 	if err != nil {
 		panic(err)
 	}
