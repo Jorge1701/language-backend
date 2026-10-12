@@ -5,6 +5,7 @@ go 1.25.10
 require (
 	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/joho/godotenv v1.5.1
+	go.yaml.in/yaml/v3 v3.0.4
 	golang.org/x/crypto v0.53.0
 	golang.org/x/time v0.15.0
 	modernc.org/sqlite v1.50.1

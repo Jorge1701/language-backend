@@ -1,0 +1,16 @@
+name: Presente do Indicativo
+irregular:
+  ir:
+    eu: "vou"
+    tu: "vais"
+    você/ele/ela: "vai"
+    nós: "vamos"
+    vós: "ides"
+    vocês/eles/elas: "vão"
+  ser:
+    eu: "sou"
+    tu: "és"
+    você/ele/ela: "é"
+    nós: "somos"
+    vós: "sois"
+    vocês/eles/elas: "são"

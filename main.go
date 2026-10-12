@@ -3,6 +3,7 @@ package main
 import (
 	"language-backend/database"
 	"language-backend/endpoints"
+	"language-backend/generator"
 	"net/http"
 	"os"
 
@@ -40,10 +41,16 @@ func main() {
 	}
 	defer db.Close()
 
+	generator, err := generator.New()
+	if err != nil {
+		panic(err)
+	}
+
 	mux := http.NewServeMux()
 
 	endpointHandler := endpoints.NewEndpointHandler(
 		db,
+		generator,
 		os.Getenv("ENV") == "prod",
 	)
 
@@ -58,6 +65,8 @@ func main() {
 	mux.HandleFunc("GET /verb/random", endpointHandler.VerbRandom)
 	mux.HandleFunc("GET /verb/list", endpointHandler.VerbList)
 	mux.HandleFunc("GET /verb/{verb}", endpointHandler.VerbDetails)
+
+	mux.HandleFunc("GET /verb/generate", endpointHandler.Generator)
 
 	handler := headersMiddleware(mux)
 
