@@ -28,13 +28,11 @@ irregular:
   estar:
     eu: "estou"
     você/ele/ela: "está"
-    nós: "estamos"
     vocês/eles/elas: "estão"
     tu: "estás"
   ter:
     eu: "tenho"
     você/ele/ela: "tem"
-    nós: "temos"
     vocês/eles/elas: "têm"
     tu: "tens"
   ir:
