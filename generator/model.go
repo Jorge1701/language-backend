@@ -7,9 +7,18 @@ const (
 	PreteritoPerfeitoDoIndicativo Tense = "PRETERITO_PERFEITO_DO_INDICATIVO"
 )
 
-var validTenses = map[Tense]bool{
-	PresenteDoIndicativo: true,
+var AllTenses = []Tense{
+	PresenteDoIndicativo,
+	PreteritoPerfeitoDoIndicativo,
 }
+
+var validTenses = func() map[Tense]bool {
+	valid := make(map[Tense]bool, len(AllTenses))
+	for _, tense := range AllTenses {
+		valid[tense] = true
+	}
+	return valid
+}()
 
 func (t Tense) IsValid() bool {
 	return validTenses[t]
@@ -25,13 +34,21 @@ const (
 	Tu            Pronoun = "TU"
 )
 
-var validPronouns = map[Pronoun]bool{
-	Eu:            true,
-	VoceEleEla:    true,
-	Nos:           true,
-	VocesElesElas: true,
-	Tu:            true,
+var AllPronouns = []Pronoun{
+	Eu,
+	VoceEleEla,
+	Nos,
+	VocesElesElas,
+	Tu,
 }
+
+var validPronouns = func() map[Pronoun]bool {
+	valid := make(map[Pronoun]bool, len(AllPronouns))
+	for _, pronoun := range AllPronouns {
+		valid[pronoun] = true
+	}
+	return valid
+}()
 
 func (p Pronoun) IsValid() bool {
 	return validPronouns[p]

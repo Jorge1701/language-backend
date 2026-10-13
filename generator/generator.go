@@ -24,20 +24,20 @@ type Generator struct {
 }
 
 func New() (*Generator, error) {
-	simplePresentTenseData, err := LoadTenseData("data/presente_do_indicativo.yml")
-	if err != nil {
-		return &Generator{}, err
-	}
-	simplePastTenseData, err := LoadTenseData("data/preterito_perfeito_do_indicativo.yml")
-	if err != nil {
-		return &Generator{}, err
+	tenseData := make(map[Tense]TenseData, len(AllTenses))
+
+	for _, tense := range AllTenses {
+		tenseFile := strings.ToLower(string(tense))
+		td, err := LoadTenseData("data/" + tenseFile + ".yml")
+		if err != nil {
+			return &Generator{}, err
+		}
+
+		tenseData[tense] = *td
 	}
 
 	return &Generator{
-		tenseData: map[Tense]TenseData{
-			PresenteDoIndicativo:          *simplePresentTenseData,
-			PreteritoPerfeitoDoIndicativo: *simplePastTenseData,
-		},
+		tenseData: tenseData,
 	}, nil
 }
 
