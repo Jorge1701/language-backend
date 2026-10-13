@@ -37,8 +37,6 @@ func New() (*Generator, error) {
 	}, nil
 }
 
-// Conjugate uses an irregular form when present, otherwise applying the regular rule.
-// An explicitly empty irregular form is unavailable.
 func (g *Generator) Conjugate(inputVerb string, tense Tense, pronoun Pronoun) (string, error) {
 	verb := strings.ToLower(strings.TrimSpace(inputVerb))
 
