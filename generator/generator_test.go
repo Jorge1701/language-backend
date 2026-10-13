@@ -7,7 +7,7 @@ import (
 
 type conjugationTestCase struct {
 	verb                string
-	correctConjugations map[string]string
+	correctConjugations map[Pronoun]string
 }
 
 func newTestGenerator(t *testing.T) *Generator {
@@ -108,84 +108,84 @@ func TestPresenteDoIndicativoConjugations(t *testing.T) {
 		// Regular examples
 		{
 			"gostar",
-			map[string]string{
-				"eu":              "gosto",
-				"você/ele/ela":    "gosta",
-				"nós":             "gostamos",
-				"vocês/eles/elas": "gostam",
-				"tu":              "gostas",
+			map[Pronoun]string{
+				Eu:            "gosto",
+				VoceEleEla:    "gosta",
+				Nos:           "gostamos",
+				VocesElesElas: "gostam",
+				Tu:            "gostas",
 			},
 		},
 		{
 			"comer",
-			map[string]string{
-				"eu":              "como",
-				"você/ele/ela":    "come",
-				"nós":             "comemos",
-				"vocês/eles/elas": "comem",
-				"tu":              "comes",
+			map[Pronoun]string{
+				Eu:            "como",
+				VoceEleEla:    "come",
+				Nos:           "comemos",
+				VocesElesElas: "comem",
+				Tu:            "comes",
 			},
 		},
 		{
 			"assistir",
-			map[string]string{
-				"eu":              "assisto",
-				"você/ele/ela":    "assiste",
-				"nós":             "assistimos",
-				"vocês/eles/elas": "assistem",
-				"tu":              "assistes",
+			map[Pronoun]string{
+				Eu:            "assisto",
+				VoceEleEla:    "assiste",
+				Nos:           "assistimos",
+				VocesElesElas: "assistem",
+				Tu:            "assistes",
 			},
 		},
 		// Irregular examples
 		{
 			"ser",
-			map[string]string{
-				"eu":              "sou",
-				"você/ele/ela":    "é",
-				"nós":             "somos",
-				"vocês/eles/elas": "são",
-				"tu":              "és",
+			map[Pronoun]string{
+				Eu:            "sou",
+				VoceEleEla:    "é",
+				Nos:           "somos",
+				VocesElesElas: "são",
+				Tu:            "és",
 			},
 		},
 		{
 			"estar",
-			map[string]string{
-				"eu":              "estou",
-				"você/ele/ela":    "está",
-				"nós":             "estamos",
-				"vocês/eles/elas": "estão",
-				"tu":              "estás",
+			map[Pronoun]string{
+				Eu:            "estou",
+				VoceEleEla:    "está",
+				Nos:           "estamos",
+				VocesElesElas: "estão",
+				Tu:            "estás",
 			},
 		},
 		{
 			"ter",
-			map[string]string{
-				"eu":              "tenho",
-				"você/ele/ela":    "tem",
-				"nós":             "temos",
-				"vocês/eles/elas": "têm",
-				"tu":              "tens",
+			map[Pronoun]string{
+				Eu:            "tenho",
+				VoceEleEla:    "tem",
+				Nos:           "temos",
+				VocesElesElas: "têm",
+				Tu:            "tens",
 			},
 		},
 		{
 			"ir",
-			map[string]string{
-				"eu":              "vou",
-				"você/ele/ela":    "vai",
-				"nós":             "vamos",
-				"vocês/eles/elas": "vão",
-				"tu":              "vais",
+			map[Pronoun]string{
+				Eu:            "vou",
+				VoceEleEla:    "vai",
+				Nos:           "vamos",
+				VocesElesElas: "vão",
+				Tu:            "vais",
 			},
 		},
 		// Mixed regular and irregular
 		{
 			"conhecer",
-			map[string]string{
-				"eu":              "conheço",
-				"você/ele/ela":    "conhece",
-				"nós":             "conhecemos",
-				"vocês/eles/elas": "conhecem",
-				"tu":              "conheces",
+			map[Pronoun]string{
+				Eu:            "conheço",
+				VoceEleEla:    "conhece",
+				Nos:           "conhecemos",
+				VocesElesElas: "conhecem",
+				Tu:            "conheces",
 			},
 		},
 	}
@@ -200,84 +200,84 @@ func TestPreteritoPerfeitoDoIndicativoConjugations(t *testing.T) {
 		// Regular examples
 		{
 			"andar",
-			map[string]string{
-				"eu":              "andei",
-				"você/ele/ela":    "andou",
-				"nós":             "andamos",
-				"vocês/eles/elas": "andaram",
-				"tu":              "andaste",
+			map[Pronoun]string{
+				Eu:            "andei",
+				VoceEleEla:    "andou",
+				Nos:           "andamos",
+				VocesElesElas: "andaram",
+				Tu:            "andaste",
 			},
 		},
 		{
 			"conhecer",
-			map[string]string{
-				"eu":              "conheci",
-				"você/ele/ela":    "conheceu",
-				"nós":             "conhecemos",
-				"vocês/eles/elas": "conheceram",
-				"tu":              "conheceste",
+			map[Pronoun]string{
+				Eu:            "conheci",
+				VoceEleEla:    "conheceu",
+				Nos:           "conhecemos",
+				VocesElesElas: "conheceram",
+				Tu:            "conheceste",
 			},
 		},
 		{
 			"assistir",
-			map[string]string{
-				"eu":              "assisti",
-				"você/ele/ela":    "assistiu",
-				"nós":             "assistimos",
-				"vocês/eles/elas": "assistiram",
-				"tu":              "assististe",
+			map[Pronoun]string{
+				Eu:            "assisti",
+				VoceEleEla:    "assistiu",
+				Nos:           "assistimos",
+				VocesElesElas: "assistiram",
+				Tu:            "assististe",
 			},
 		},
 		// Irregular examples
 		{
 			"ser",
-			map[string]string{
-				"eu":              "fui",
-				"você/ele/ela":    "foi",
-				"nós":             "fomos",
-				"vocês/eles/elas": "foram",
-				"tu":              "foste",
+			map[Pronoun]string{
+				Eu:            "fui",
+				VoceEleEla:    "foi",
+				Nos:           "fomos",
+				VocesElesElas: "foram",
+				Tu:            "foste",
 			},
 		},
 		{
 			"estar",
-			map[string]string{
-				"eu":              "estive",
-				"você/ele/ela":    "esteve",
-				"nós":             "estivemos",
-				"vocês/eles/elas": "estiveram",
-				"tu":              "estiveste",
+			map[Pronoun]string{
+				Eu:            "estive",
+				VoceEleEla:    "esteve",
+				Nos:           "estivemos",
+				VocesElesElas: "estiveram",
+				Tu:            "estiveste",
 			},
 		},
 		{
 			"ter",
-			map[string]string{
-				"eu":              "tive",
-				"você/ele/ela":    "teve",
-				"nós":             "tivemos",
-				"vocês/eles/elas": "tiveram",
-				"tu":              "tiveste",
+			map[Pronoun]string{
+				Eu:            "tive",
+				VoceEleEla:    "teve",
+				Nos:           "tivemos",
+				VocesElesElas: "tiveram",
+				Tu:            "tiveste",
 			},
 		},
 		{
 			"ir",
-			map[string]string{
-				"eu":              "fui",
-				"você/ele/ela":    "foi",
-				"nós":             "fomos",
-				"vocês/eles/elas": "foram",
-				"tu":              "foste",
+			map[Pronoun]string{
+				Eu:            "fui",
+				VoceEleEla:    "foi",
+				Nos:           "fomos",
+				VocesElesElas: "foram",
+				Tu:            "foste",
 			},
 		},
 		// Mixed regular and irregular
 		{
 			"ficar",
-			map[string]string{
-				"eu":              "fiquei",
-				"você/ele/ela":    "ficou",
-				"nós":             "ficamos",
-				"vocês/eles/elas": "ficaram",
-				"tu":              "ficaste",
+			map[Pronoun]string{
+				Eu:            "fiquei",
+				VoceEleEla:    "ficou",
+				Nos:           "ficamos",
+				VocesElesElas: "ficaram",
+				Tu:            "ficaste",
 			},
 		},
 	}
@@ -286,19 +286,9 @@ func TestPreteritoPerfeitoDoIndicativoConjugations(t *testing.T) {
 }
 
 func execute(t *testing.T, g *Generator, tense Tense, cases []conjugationTestCase) {
-	tenseText, err := TenseText(tense)
-	if err != nil {
-		t.Fatal(err)
-	}
-
 	for _, tt := range cases {
-		for pronounText, correctConjugation := range tt.correctConjugations {
-			pronoun, err := PronounFromText(pronounText)
-			if err != nil {
-				t.Fatal(err)
-			}
-
-			t.Run(tenseText+"/"+pronounText+"/"+tt.verb, func(t *testing.T) {
+		for pronoun, correctConjugation := range tt.correctConjugations {
+			t.Run(string(tense)+"/"+string(pronoun)+"/"+tt.verb, func(t *testing.T) {
 				got, err := g.Conjugate(tt.verb, tense, pronoun)
 
 				if err != nil || got != correctConjugation {

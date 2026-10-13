@@ -7,9 +7,8 @@ import (
 	"go.yaml.in/yaml/v3"
 )
 
-// TenseData contains a tense's display name and irregular conjugations.
+// TenseData contains regular endings and per-verb conjugation overrides.
 type TenseData struct {
-	Name           string                       `yaml:"name"`
 	RegularEndings map[string]map[string]string `yaml:"regular_endings"`
 	Irregular      map[string]map[string]string `yaml:"irregular"`
 }

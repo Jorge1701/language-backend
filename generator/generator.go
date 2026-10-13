@@ -8,10 +8,8 @@ import (
 
 var (
 	ErrInvalidVerb            = errors.New("invalid verb infinitive")
-	ErrInvalidTense           = errors.New("invalid tense")
 	ErrInvalidPronoun         = errors.New("invalid pronoun")
 	ErrTenseNotImplemented    = errors.New("tense not pronoun")
-	ErrNotImplemented         = errors.New("conjugation not implemented")
 	ErrConjugationUnavailable = errors.New("conjugation unavailable")
 )
 
