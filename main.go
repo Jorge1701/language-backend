@@ -66,8 +66,6 @@ func main() {
 	mux.HandleFunc("GET /verb/list", endpointHandler.VerbList)
 	mux.HandleFunc("GET /verb/{verb}", endpointHandler.VerbDetails)
 
-	mux.HandleFunc("GET /verb/generate", endpointHandler.Generator)
-
 	handler := headersMiddleware(mux)
 
 	err = http.ListenAndServe(":"+os.Getenv("SERVER_PORT"), handler)
