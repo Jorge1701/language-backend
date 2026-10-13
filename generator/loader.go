@@ -9,8 +9,9 @@ import (
 
 // TenseData contains a tense's display name and irregular conjugations.
 type TenseData struct {
-	Name      string                       `yaml:"name"`
-	Irregular map[string]map[string]string `yaml:"irregular"`
+	Name           string                       `yaml:"name"`
+	RegularEndings map[string]map[string]string `yaml:"regular_endings"`
+	Irregular      map[string]map[string]string `yaml:"irregular"`
 }
 
 // LoadTenseData reads a YAML file in the name/irregular format.

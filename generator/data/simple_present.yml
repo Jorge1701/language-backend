@@ -1,16 +1,45 @@
 name: Presente do Indicativo
-irregular:
+regular_endings:
+  ar:
+    eu: "o"
+    você/ele/ela: "a"
+    nós: "amos"
+    vocês/eles/elas: "am"
+    tu: "as"
+  er:
+    eu: "o"
+    você/ele/ela: "e"
+    nós: "emos"
+    vocês/eles/elas: "em"
+    tu: "es"
   ir:
-    eu: "vou"
-    tu: "vais"
-    você/ele/ela: "vai"
-    nós: "vamos"
-    vós: "ides"
-    vocês/eles/elas: "vão"
+    eu: "o"
+    você/ele/ela: "e"
+    nós: "imos"
+    vocês/eles/elas: "em"
+    tu: "es"
+irregular:
   ser:
     eu: "sou"
-    tu: "és"
     você/ele/ela: "é"
     nós: "somos"
-    vós: "sois"
     vocês/eles/elas: "são"
+    tu: "és"
+  estar:
+    eu: "estou"
+    você/ele/ela: "está"
+    nós: "estamos"
+    vocês/eles/elas: "estão"
+    tu: "estás"
+  ter:
+    eu: "tenho"
+    você/ele/ela: "tem"
+    nós: "temos"
+    vocês/eles/elas: "têm"
+    tu: "tens"
+  ir:
+    eu: "vou"
+    você/ele/ela: "vai"
+    nós: "vamos"
+    vocês/eles/elas: "vão"
+    tu: "vais"
