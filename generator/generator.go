@@ -4,7 +4,6 @@ package generator
 import (
 	"embed"
 	"errors"
-	"language-backend/model"
 	"strings"
 )
 
@@ -21,28 +20,28 @@ var (
 var verbFiles embed.FS
 
 type Generator struct {
-	tenseData map[model.Tense]TenseData
+	tenseData map[Tense]TenseData
 }
 
 func New() (*Generator, error) {
-	simplePresentTenseData, err := LoadTenseData("data/simple_present.yml")
+	simplePresentTenseData, err := LoadTenseData("data/presente_do_indicativo.yml")
 	if err != nil {
 		return &Generator{}, err
 	}
-	simplePastTenseData, err := LoadTenseData("data/simple_past.yml")
+	simplePastTenseData, err := LoadTenseData("data/preterito_perfeito_do_indicativo.yml")
 	if err != nil {
 		return &Generator{}, err
 	}
 
 	return &Generator{
-		tenseData: map[model.Tense]TenseData{
-			model.SimplePresent: *simplePresentTenseData,
-			model.SimplePast:    *simplePastTenseData,
+		tenseData: map[Tense]TenseData{
+			PresenteDoIndicativo:          *simplePresentTenseData,
+			PreteritoPerfeitoDoIndicativo: *simplePastTenseData,
 		},
 	}, nil
 }
 
-func (g *Generator) Conjugate(inputVerb string, tense model.Tense, pronoun model.Pronoun) (string, error) {
+func (g *Generator) Conjugate(inputVerb string, tense Tense, pronoun Pronoun) (string, error) {
 	verb := strings.ToLower(strings.TrimSpace(inputVerb))
 
 	if !validateInfinitiveForm(verb) {

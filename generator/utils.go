@@ -2,24 +2,21 @@ package generator
 
 import (
 	"errors"
-	"language-backend/model"
 	"strings"
 )
 
 // PronounText returns the lowercase Portuguese display form of a pronoun.
-func PronounText(pronoun model.Pronoun) (string, error) {
+func PronounText(pronoun Pronoun) (string, error) {
 	switch pronoun {
-	case model.FirstPersonalSingular:
+	case Eu:
 		return "eu", nil
-	case model.SecondPersonalSingular:
+	case Tu:
 		return "tu", nil
-	case model.ThirdPersonalSingular:
+	case VoceEleEla:
 		return "você/ele/ela", nil
-	case model.FirstPersonalPlural:
+	case Nos:
 		return "nós", nil
-	case model.SecondPersonalPlural:
-		return "vós", nil
-	case model.ThirdPersonalPlural:
+	case VocesElesElas:
 		return "vocês/eles/elas", nil
 	default:
 		return "", errors.New("Pronoun not implemented")
@@ -27,60 +24,42 @@ func PronounText(pronoun model.Pronoun) (string, error) {
 }
 
 // PronounFromText parses a Portuguese display form, ignoring case and surrounding whitespace.
-func PronounFromText(text string) (model.Pronoun, error) {
+func PronounFromText(text string) (Pronoun, error) {
 	switch strings.ToLower(strings.TrimSpace(text)) {
 	case "eu":
-		return model.FirstPersonalSingular, nil
+		return Eu, nil
 	case "tu":
-		return model.SecondPersonalSingular, nil
+		return Tu, nil
 	case "você/ele/ela":
-		return model.ThirdPersonalSingular, nil
+		return VoceEleEla, nil
 	case "nós":
-		return model.FirstPersonalPlural, nil
-	case "vós":
-		return model.SecondPersonalPlural, nil
+		return Nos, nil
 	case "vocês/eles/elas":
-		return model.ThirdPersonalPlural, nil
+		return VocesElesElas, nil
 	default:
 		return "", errors.New("Pronoun not implemented")
 	}
 }
 
 // TenseText returns the Portuguese display name of a tense.
-func TenseText(tense model.Tense) (string, error) {
+func TenseText(tense Tense) (string, error) {
 	switch tense {
-	case model.SimplePresent:
+	case PresenteDoIndicativo:
 		return "Presente do Indicativo", nil
-	case model.ImperfectPast:
-		return "Pretérito Imperfeito", nil
-	case model.SimplePast:
+	case PreteritoPerfeitoDoIndicativo:
 		return "Pretérito Perfeito", nil
-	case model.PastPerfect:
-		return "Pretérito Mais-que-perfeito", nil
-	case model.SimpleFuture:
-		return "Futuro do Presente", nil
-	case model.Conditional:
-		return "Futuro do Pretérito", nil
 	default:
 		return "", errors.New("Tense not implemented")
 	}
 }
 
 // TenseFromText parses a Portuguese display name, ignoring case and surrounding whitespace.
-func TenseFromText(text string) (model.Tense, error) {
+func TenseFromText(text string) (Tense, error) {
 	switch strings.ToLower(strings.TrimSpace(text)) {
 	case "presente":
-		return model.SimplePresent, nil
-	case "pretérito imperfeito":
-		return model.ImperfectPast, nil
+		return PresenteDoIndicativo, nil
 	case "pretérito perfeito":
-		return model.SimplePast, nil
-	case "pretérito mais-que-perfeito":
-		return model.PastPerfect, nil
-	case "futuro do presente":
-		return model.SimpleFuture, nil
-	case "futuro do pretérito":
-		return model.Conditional, nil
+		return PreteritoPerfeitoDoIndicativo, nil
 	default:
 		return "", errors.New("Tense not implemented")
 	}

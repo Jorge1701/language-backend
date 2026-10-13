@@ -1,7 +1,6 @@
 package generator
 
 import (
-	"language-backend/model"
 	"testing"
 )
 
@@ -97,7 +96,7 @@ func TestSimplePresentConjugations(t *testing.T) {
 		},
 	}
 
-	execute(t, g, model.SimplePresent, cases)
+	execute(t, g, PresenteDoIndicativo, cases)
 }
 
 func TestSimplePastConjugations(t *testing.T) {
@@ -178,10 +177,10 @@ func TestSimplePastConjugations(t *testing.T) {
 		},
 	}
 
-	execute(t, g, model.SimplePast, cases)
+	execute(t, g, PreteritoPerfeitoDoIndicativo, cases)
 }
 
-func execute(t *testing.T, g *Generator, tense model.Tense, cases []conjugationTestCase) {
+func execute(t *testing.T, g *Generator, tense Tense, cases []conjugationTestCase) {
 	tenseText, err := TenseText(tense)
 	if err != nil {
 		t.Fatal(err)
