@@ -1,0 +1,45 @@
+name: Pretérito Perfeito do Indicativo
+regular_endings:
+  ar:
+    eu: "ei"
+    você/ele/ela: "ou"
+    nós: "amos"
+    vocês/eles/elas: "aram"
+    tu: "aste"
+  er:
+    eu: "i"
+    você/ele/ela: "eu"
+    nós: "emos"
+    vocês/eles/elas: "eram"
+    tu: "este"
+  ir:
+    eu: "i"
+    você/ele/ela: "iu"
+    nós: "imos"
+    vocês/eles/elas: "iram"
+    tu: "iste"
+irregular:
+  ser:
+    eu: "fui"
+    você/ele/ela: "foi"
+    nós: "fomos"
+    vocês/eles/elas: "foram"
+    tu: "foste"
+  estar:
+    eu: "estive"
+    você/ele/ela: "esteve"
+    nós: "estivemos"
+    vocês/eles/elas: "estiveram"
+    tu: "estiviste"
+  ter:
+    eu: "tive"
+    você/ele/ela: "teve"
+    nós: "tivemos"
+    vocês/eles/elas: "tiveram"
+    tu: "tiviste"
+  ir:
+    eu: "fui"
+    você/ele/ela: "foi"
+    nós: "fomos"
+    vocês/eles/elas: "foram"
+    tu: "foste"

@@ -100,6 +100,87 @@ func TestSimplePresentConjugations(t *testing.T) {
 	execute(t, g, model.SimplePresent, cases)
 }
 
+func TestSimplePastConjugations(t *testing.T) {
+	g := newTestGenerator(t)
+
+	cases := []conjugationTestCase{
+		// Regular examples
+		{
+			"andar",
+			map[string]string{
+				"eu":              "andei",
+				"você/ele/ela":    "andou",
+				"nós":             "andamos",
+				"vocês/eles/elas": "andaram",
+				"tu":              "andaste",
+			},
+		},
+		{
+			"conhecer",
+			map[string]string{
+				"eu":              "conheci",
+				"você/ele/ela":    "conheceu",
+				"nós":             "conhecemos",
+				"vocês/eles/elas": "conheceram",
+				"tu":              "conheceste",
+			},
+		},
+		{
+			"assistir",
+			map[string]string{
+				"eu":              "assisti",
+				"você/ele/ela":    "assistiu",
+				"nós":             "assistimos",
+				"vocês/eles/elas": "assistiram",
+				"tu":              "assististe",
+			},
+		},
+		// Irregular examples
+		{
+			"ser",
+			map[string]string{
+				"eu":              "fui",
+				"você/ele/ela":    "foi",
+				"nós":             "fomos",
+				"vocês/eles/elas": "foram",
+				"tu":              "foste",
+			},
+		},
+		{
+			"estar",
+			map[string]string{
+				"eu":              "estive",
+				"você/ele/ela":    "esteve",
+				"nós":             "estivemos",
+				"vocês/eles/elas": "estiveram",
+				"tu":              "estiviste",
+			},
+		},
+		{
+			"ter",
+			map[string]string{
+				"eu":              "tive",
+				"você/ele/ela":    "teve",
+				"nós":             "tivemos",
+				"vocês/eles/elas": "tiveram",
+				"tu":              "tiviste",
+			},
+		},
+		{
+			"ir",
+			map[string]string{
+				"eu":              "fui",
+				"você/ele/ela":    "foi",
+				"nós":             "fomos",
+				"vocês/eles/elas": "foram",
+				"tu":              "foste",
+			},
+		},
+	}
+
+	execute(t, g, model.SimplePast, cases)
+}
+
 func execute(t *testing.T, g *Generator, tense model.Tense, cases []conjugationTestCase) {
 	tenseText, err := TenseText(tense)
 	if err != nil {

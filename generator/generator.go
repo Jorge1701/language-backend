@@ -29,10 +29,15 @@ func New() (*Generator, error) {
 	if err != nil {
 		return &Generator{}, err
 	}
+	simplePastTenseData, err := LoadTenseData("data/simple_past.yml")
+	if err != nil {
+		return &Generator{}, err
+	}
 
 	return &Generator{
 		tenseData: map[model.Tense]TenseData{
 			model.SimplePresent: *simplePresentTenseData,
+			model.SimplePast:    *simplePastTenseData,
 		},
 	}, nil
 }
