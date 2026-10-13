@@ -1,8 +1,8 @@
 package generator
 
 import (
+	"embed"
 	"fmt"
-	"os"
 
 	"go.yaml.in/yaml/v3"
 )
@@ -14,9 +14,12 @@ type TenseData struct {
 	Irregular      map[string]map[string]string `yaml:"irregular"`
 }
 
-// LoadTenseData reads a YAML file in the name/irregular format.
+//go:embed data/*.yml
+var verbFiles embed.FS
+
+// LoadTenseData reads an embedded YAML file containing regular endings and irregular conjugations.
 func LoadTenseData(filename string) (*TenseData, error) {
-	data, err := os.ReadFile(filename)
+	data, err := verbFiles.ReadFile(filename)
 	if err != nil {
 		return nil, fmt.Errorf("read %s: %w", filename, err)
 	}

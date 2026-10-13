@@ -2,7 +2,6 @@
 package generator
 
 import (
-	"embed"
 	"errors"
 	"strings"
 )
@@ -15,9 +14,6 @@ var (
 	ErrNotImplemented         = errors.New("conjugation not implemented")
 	ErrConjugationUnavailable = errors.New("conjugation unavailable")
 )
-
-//go:embed data/*.yml
-var verbFiles embed.FS
 
 type Generator struct {
 	tenseData map[Tense]TenseData
@@ -41,6 +37,8 @@ func New() (*Generator, error) {
 	}, nil
 }
 
+// Conjugate uses an irregular form when present, otherwise applying the regular rule.
+// An explicitly empty irregular form is unavailable.
 func (g *Generator) Conjugate(inputVerb string, tense Tense, pronoun Pronoun) (string, error) {
 	verb := strings.ToLower(strings.TrimSpace(inputVerb))
 
@@ -58,19 +56,20 @@ func (g *Generator) Conjugate(inputVerb string, tense Tense, pronoun Pronoun) (s
 		return "", ErrTenseNotImplemented
 	}
 
-	irregularData, isIrregular := tenseData.Irregular[verb]
-	if isIrregular {
-		return irregularData[pronounText], nil
-	} else {
-		base, infinitiveEnding := extractBase(verb)
-
-		conjugationEnding, found := tenseData.RegularEndings[infinitiveEnding][pronounText]
-		if !found {
+	if conjugation, found := tenseData.Irregular[verb][pronounText]; found {
+		if conjugation == "" {
 			return "", ErrConjugationUnavailable
 		}
-
-		return base + conjugationEnding, nil
+		return conjugation, nil
 	}
+
+	base, infinitiveEnding := extractBase(verb)
+	conjugationEnding, found := tenseData.RegularEndings[infinitiveEnding][pronounText]
+	if !found {
+		return "", ErrConjugationUnavailable
+	}
+
+	return base + conjugationEnding, nil
 }
 
 func validateInfinitiveForm(verb string) bool {

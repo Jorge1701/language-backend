@@ -1,6 +1,7 @@
 package generator
 
 import (
+	"errors"
 	"testing"
 )
 
@@ -16,6 +17,88 @@ func newTestGenerator(t *testing.T) *Generator {
 		t.Fatal(err)
 	}
 	return g
+}
+
+func TestNewWithDifferentWorkingDirectory(t *testing.T) {
+	t.Chdir(t.TempDir())
+	g := newTestGenerator(t)
+
+	cases := []struct {
+		tense Tense
+		verb  string
+		want  string
+	}{
+		{PresenteDoIndicativo, "falar", "falo"},
+		{PresenteDoIndicativo, "ir", "vou"},
+		{PreteritoPerfeitoDoIndicativo, "falar", "falei"},
+		{PreteritoPerfeitoDoIndicativo, "ir", "fui"},
+	}
+
+	for _, tt := range cases {
+		t.Run(string(tt.tense)+"/"+tt.verb, func(t *testing.T) {
+			got, err := g.Conjugate(tt.verb, tt.tense, Eu)
+			if err != nil || got != tt.want {
+				t.Fatalf("got (%q, %v), want %q", got, err, tt.want)
+			}
+		})
+	}
+}
+
+func TestConjugateIrregularOverrides(t *testing.T) {
+	cases := []struct {
+		name      string
+		overrides map[string]string
+		pronoun   Pronoun
+		want      string
+		wantErr   error
+	}{
+		{
+			name:      "present override",
+			overrides: map[string]string{"eu": "conheço"},
+			pronoun:   Eu,
+			want:      "conheço",
+		},
+		{
+			name:      "missing pronoun uses regular rule",
+			overrides: map[string]string{"eu": "conheço"},
+			pronoun:   Tu,
+			want:      "conheces",
+		},
+		{
+			name:      "empty form is unavailable",
+			overrides: map[string]string{"eu": ""},
+			pronoun:   Eu,
+			wantErr:   ErrConjugationUnavailable,
+		},
+		{
+			name:    "nil override map uses regular rule",
+			pronoun: Tu,
+			want:    "conheces",
+		},
+	}
+
+	for _, tt := range cases {
+		t.Run(tt.name, func(t *testing.T) {
+			g := newTestGenerator(t)
+			g.tenseData[PresenteDoIndicativo].Irregular["conhecer"] = tt.overrides
+
+			got, err := g.Conjugate("conhecer", PresenteDoIndicativo, tt.pronoun)
+			if got != tt.want || !errors.Is(err, tt.wantErr) {
+				t.Fatalf("got (%q, %v), want (%q, %v)", got, err, tt.want, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestConjugateMissingIrregularAndRegularForm(t *testing.T) {
+	g := newTestGenerator(t)
+	g.tenseData[PresenteDoIndicativo].Irregular["conhecer"] = map[string]string{"eu": "conheço"}
+	delete(g.tenseData[PresenteDoIndicativo].RegularEndings["er"], "tu")
+
+	got, err := g.Conjugate("conhecer", PresenteDoIndicativo, Tu)
+	if got != "" || !errors.Is(err, ErrConjugationUnavailable) {
+		t.Fatalf("got (%q, %v), want (%q, %v)", got, err, "", ErrConjugationUnavailable)
+	}
 }
 
 func TestSimplePresentConjugations(t *testing.T) {
@@ -152,7 +235,7 @@ func TestSimplePastConjugations(t *testing.T) {
 				"você/ele/ela":    "esteve",
 				"nós":             "estivemos",
 				"vocês/eles/elas": "estiveram",
-				"tu":              "estiviste",
+				"tu":              "estiveste",
 			},
 		},
 		{
@@ -162,7 +245,7 @@ func TestSimplePastConjugations(t *testing.T) {
 				"você/ele/ela":    "teve",
 				"nós":             "tivemos",
 				"vocês/eles/elas": "tiveram",
-				"tu":              "tiviste",
+				"tu":              "tiveste",
 			},
 		},
 		{
