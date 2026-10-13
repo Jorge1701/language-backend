@@ -101,7 +101,7 @@ func TestConjugateMissingIrregularAndRegularForm(t *testing.T) {
 	}
 }
 
-func TestSimplePresentConjugations(t *testing.T) {
+func TestPresenteDoIndicativoConjugations(t *testing.T) {
 	g := newTestGenerator(t)
 
 	cases := []conjugationTestCase{
@@ -177,12 +177,23 @@ func TestSimplePresentConjugations(t *testing.T) {
 				"tu":              "vais",
 			},
 		},
+		// Mixed regular and irregular
+		{
+			"conhecer",
+			map[string]string{
+				"eu":              "conheço",
+				"você/ele/ela":    "conhece",
+				"nós":             "conhecemos",
+				"vocês/eles/elas": "conhecem",
+				"tu":              "conheces",
+			},
+		},
 	}
 
 	execute(t, g, PresenteDoIndicativo, cases)
 }
 
-func TestSimplePastConjugations(t *testing.T) {
+func TestPreteritoPerfeitoDoIndicativoConjugations(t *testing.T) {
 	g := newTestGenerator(t)
 
 	cases := []conjugationTestCase{
@@ -256,6 +267,17 @@ func TestSimplePastConjugations(t *testing.T) {
 				"nós":             "fomos",
 				"vocês/eles/elas": "foram",
 				"tu":              "foste",
+			},
+		},
+		// Mixed regular and irregular
+		{
+			"ficar",
+			map[string]string{
+				"eu":              "fiquei",
+				"você/ele/ela":    "ficou",
+				"nós":             "ficamos",
+				"vocês/eles/elas": "ficaram",
+				"tu":              "ficaste",
 			},
 		},
 	}
