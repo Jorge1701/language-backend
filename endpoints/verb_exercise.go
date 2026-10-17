@@ -2,6 +2,7 @@ package endpoints
 
 import (
 	"errors"
+	"fmt"
 	"language-backend/database"
 	"language-backend/model"
 	"math/rand"
@@ -15,14 +16,14 @@ var (
 )
 
 func (h *Handler) VerbExercise(w http.ResponseWriter, r *http.Request) {
-	tenseParam := model.Tense(strings.TrimSpace(strings.ToUpper(r.URL.Query().Get("tense"))))
+	tenseParam := model.Tense(strings.TrimSpace(r.URL.Query().Get("tense")))
 	if !tenseParam.IsValid() {
-		response400(w, r, "Invalid param 'tense'")
+		response400(w, r, fmt.Sprintf("Invalid param 'tense': %s", tenseParam))
 		return
 	}
-	pronounParam := model.Pronoun(strings.TrimSpace(strings.ToUpper(r.URL.Query().Get("pronoun"))))
+	pronounParam := model.Pronoun(strings.TrimSpace(r.URL.Query().Get("pronoun")))
 	if !pronounParam.IsValid() {
-		response400(w, r, "Invalid param 'pronoun'")
+		response400(w, r, fmt.Sprintf("Invalid param 'pronoun': %s", pronounParam))
 		return
 	}
 	verbParam := strings.TrimSpace(strings.ToLower(r.URL.Query().Get("verb")))
@@ -116,24 +117,24 @@ func (h *Handler) findExample(pronoun, conjugation string) *model.ExerciseExampl
 }
 
 var (
-	tps = []string{"você", "ele", "ela"}
-	tpp = []string{"vocês", "eles", "elas"}
+	voceEleEla    = []string{"você", "ele", "ela"}
+	vocesElesElas = []string{"vocês", "eles", "elas"}
 )
 
 func getPronounText(pronoun model.Pronoun) string {
 	switch pronoun {
-	case model.FirstPersonalSingular:
+	case model.Eu:
 		return "eu"
-	case model.SecondPersonalSingular:
+	case model.Tu:
 		return "tu"
-	case model.ThirdPersonalSingular:
-		return tps[rand.Intn(3)]
-	case model.FirstPersonalPlural:
+	case model.VoceEleEla:
+		return voceEleEla[rand.Intn(3)]
+	case model.Nos:
 		return "nós"
-	case model.SecondPersonalPlural:
+	case model.Vos:
 		return "vós"
-	case model.ThirdPersonalPlural:
-		return tpp[rand.Intn(3)]
+	case model.VocesElesElas:
+		return vocesElesElas[rand.Intn(3)]
 	}
 	return "-"
 }

@@ -5,21 +5,21 @@ import "fmt"
 type Tense string
 
 const (
-	SimplePresent Tense = "SIMPLE_PRESENT"
-	ImperfectPast Tense = "IMPERFECT_PAST"
-	SimplePast    Tense = "SIMPLE_PAST"
-	PastPerfect   Tense = "PAST_PERFECT"
-	SimpleFuture  Tense = "SIMPLE_FUTURE"
-	Conditional   Tense = "CONDITIONAL"
+	PresenteDoIndicativo                 Tense = "PresenteDoIndicativo"
+	PreteritoImperfeitoDoIndicativo      Tense = "PreteritoImperfeitoDoIndicativo"
+	PreteritoPerfeitoDoIndicativo        Tense = "PreteritoPerfeitoDoIndicativo"
+	PreteritoMaisQuePerfeitoDoIndicativo Tense = "PreteritoMaisQuePerfeitoDoIndicativo"
+	FuturoDoPresenteDoIndicativo         Tense = "FuturoDoPresenteDoIndicativo"
+	FuturoDoPreteritoDoIndicativo        Tense = "FuturoDoPreteritoDoIndicativo"
 )
 
 var validTenses = map[Tense]bool{
-	SimplePresent: true,
-	ImperfectPast: true,
-	SimplePast:    true,
-	PastPerfect:   true,
-	SimpleFuture:  true,
-	Conditional:   true,
+	PresenteDoIndicativo:                 true,
+	PreteritoImperfeitoDoIndicativo:      true,
+	PreteritoPerfeitoDoIndicativo:        true,
+	PreteritoMaisQuePerfeitoDoIndicativo: true,
+	FuturoDoPresenteDoIndicativo:         true,
+	FuturoDoPreteritoDoIndicativo:        true,
 }
 
 func (t Tense) IsValid() bool {
@@ -29,21 +29,21 @@ func (t Tense) IsValid() bool {
 type Pronoun string
 
 const (
-	FirstPersonalSingular  Pronoun = "FIRST_PERSON_SINGULAR"
-	SecondPersonalSingular Pronoun = "SECOND_PERSON_SINGULAR"
-	ThirdPersonalSingular  Pronoun = "THIRD_PERSON_SINGULAR"
-	FirstPersonalPlural    Pronoun = "FIRST_PERSON_PLURAL"
-	SecondPersonalPlural   Pronoun = "SECOND_PERSON_PLURAL"
-	ThirdPersonalPlural    Pronoun = "THIRD_PERSON_PLURAL"
+	Eu            Pronoun = "Eu"
+	Tu            Pronoun = "Tu"
+	VoceEleEla    Pronoun = "VoceEleEla"
+	Nos           Pronoun = "Nos"
+	Vos           Pronoun = "Vos"
+	VocesElesElas Pronoun = "VocesElesElas"
 )
 
 var validPronouns = map[Pronoun]bool{
-	FirstPersonalSingular:  true,
-	SecondPersonalSingular: true,
-	ThirdPersonalSingular:  true,
-	FirstPersonalPlural:    true,
-	SecondPersonalPlural:   true,
-	ThirdPersonalPlural:    true,
+	Eu:            true,
+	Tu:            true,
+	VoceEleEla:    true,
+	Nos:           true,
+	Vos:           true,
+	VocesElesElas: true,
 }
 
 func (p Pronoun) IsValid() bool {
@@ -68,23 +68,23 @@ type VerbExerciseInfo struct {
 }
 
 type VerbInfo struct {
-	Type             string           `json:"type"`
-	Infinitive       string           `json:"infinitive,omitempty"`
-	PresentPaticiple string           `json:"present_participle,omitempty"`
-	PastParticiple   string           `json:"past_participle,omitempty"`
-	SimplePresent    VerbConjugations `json:"simple_present"`
-	ImperfectPast    VerbConjugations `json:"imperfect_past"`
-	SimplePast       VerbConjugations `json:"simple_past"`
-	PastPerfect      VerbConjugations `json:"past_perfect"`
-	SimpleFuture     VerbConjugations `json:"simple_future"`
-	Conditional      VerbConjugations `json:"conditional"`
+	Type                                 string           `json:"type"`
+	Infinitive                           string           `json:"infinitive,omitempty"`
+	PresentPaticiple                     string           `json:"present_participle,omitempty"`
+	PastParticiple                       string           `json:"past_participle,omitempty"`
+	PresenteDoIndicativo                 VerbConjugations `json:"presente_do_indicativo"`
+	PreteritoImperfeitoDoIndicativo      VerbConjugations `json:"preterito_imperfeito_do_indicativo"`
+	PreteritoPerfeitoDoIndicativo        VerbConjugations `json:"preterito_perfeito_do_indicativo"`
+	PreteritoMaisQuePerfeitoDoIndicativo VerbConjugations `json:"preterito_mais_que_perfeito_do_indicativo"`
+	FuturoDoPresenteDoIndicativo         VerbConjugations `json:"futuro_do_presente_do_indicativo"`
+	FuturoDoPreteritoDoIndicativo        VerbConjugations `json:"futuro_do_preterito_do_indicativo"`
 }
 
 type VerbConjugations struct {
-	FirstPersonSingular  string `json:"fps"`
-	SecondPersonSingular string `json:"sps"`
-	ThirdPersonSingular  string `json:"tps"`
-	FirstPersonPlural    string `json:"fpp"`
-	SecondPersonPlural   string `json:"spp"`
-	ThirdPersonPlural    string `json:"tpp"`
+	Eu            string `json:"eu"`
+	Tu            string `json:"tu"`
+	VoceEleEla    string `json:"voce_ele_ela"`
+	Nos           string `json:"nos"`
+	Vos           string `json:"vos"`
+	VocesElesElas string `json:"voces_eles_elas"`
 }
