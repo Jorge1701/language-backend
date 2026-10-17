@@ -18,12 +18,12 @@ var (
 func (h *Handler) VerbExercise(w http.ResponseWriter, r *http.Request) {
 	tenseParam := model.Tense(strings.TrimSpace(r.URL.Query().Get("tense")))
 	if !tenseParam.IsValid() {
-		response400(w, r, fmt.Sprintf("Invalid param 'tense' %s", tenseParam))
+		response400(w, r, fmt.Sprintf("Invalid param 'tense': %s", tenseParam))
 		return
 	}
 	pronounParam := model.Pronoun(strings.TrimSpace(r.URL.Query().Get("pronoun")))
 	if !pronounParam.IsValid() {
-		response400(w, r, "Invalid param 'pronoun'")
+		response400(w, r, fmt.Sprintf("Invalid param 'pronoun': %s", pronounParam))
 		return
 	}
 	verbParam := strings.TrimSpace(strings.ToLower(r.URL.Query().Get("verb")))
