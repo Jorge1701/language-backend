@@ -122,17 +122,17 @@ var (
 
 func getPronounText(pronoun model.Pronoun) string {
 	switch pronoun {
-	case model.FirstPersonalSingular:
+	case model.Eu:
 		return "eu"
-	case model.SecondPersonalSingular:
+	case model.Tu:
 		return "tu"
-	case model.ThirdPersonalSingular:
+	case model.VoceEleEla:
 		return tps[rand.Intn(3)]
-	case model.FirstPersonalPlural:
+	case model.Nos:
 		return "nós"
-	case model.SecondPersonalPlural:
+	case model.Vos:
 		return "vós"
-	case model.ThirdPersonalPlural:
+	case model.VocesElesElas:
 		return tpp[rand.Intn(3)]
 	}
 	return "-"

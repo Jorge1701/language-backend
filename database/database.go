@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"language-backend/model"
 	"math/rand"
-	"strings"
 )
 
 const (
@@ -47,22 +46,39 @@ func (db *Database) FindConjugation(tense model.Tense, pronoun model.Pronoun, ve
 }
 
 func getColumnName(tense model.Tense, pronoun model.Pronoun) string {
+	t := ""
+	switch tense {
+	case model.PresenteDoIndicativo:
+		t = "presente_do_indicativo"
+	case model.PreteritoImperfeitoDoIndicativo:
+		t = "preterito_imperfeito_do_indicativo"
+	case model.PreteritoPerfeitoDoIndicativo:
+		t = "preterito_perfeito_do_indicativo"
+	case model.PreteritoMaisQuePerfeitoDoIndicativo:
+		t = "preterito_mais_que_perfeito_do_indicativo"
+	case model.FuturoDoPresenteDoIndicativo:
+		t = "futuro_do_presente_do_indicativo"
+	case model.FuturoDoPreteritoDoIndicativo:
+		t = "futuro_do_preterito_do_indicativo"
+	}
+
 	p := ""
 	switch pronoun {
-	case model.FirstPersonalSingular:
-		p = "fps"
-	case model.SecondPersonalSingular:
-		p = "sps"
-	case model.ThirdPersonalSingular:
-		p = "tps"
-	case model.FirstPersonalPlural:
-		p = "fpp"
-	case model.SecondPersonalPlural:
-		p = "spp"
-	case model.ThirdPersonalPlural:
-		p = "tpp"
+	case model.Eu:
+		p = "eu"
+	case model.Tu:
+		p = "tu"
+	case model.VoceEleEla:
+		p = "voce_ele_ela"
+	case model.Nos:
+		p = "nos"
+	case model.Vos:
+		p = "vos"
+	case model.VocesElesElas:
+		p = "voces_eles_elas"
 	}
-	return fmt.Sprintf("%s_%s", strings.ToLower(string(tense)), p)
+
+	return fmt.Sprintf("%s_%s", t, p)
 }
 
 func (db *Database) FindVerb(verb string) (VerbRow, error) {

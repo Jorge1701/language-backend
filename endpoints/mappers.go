@@ -12,12 +12,12 @@ func mapVerbRow(verbRow database.VerbRow) model.VerbInfo {
 		PresentPaticiple: verbRow.PresentParticiple,
 		PastParticiple:   verbRow.PastParticiple,
 		SimplePresent: model.VerbConjugations{
-			FirstPersonSingular:  verbRow.SimplePresentFPS,
-			SecondPersonSingular: verbRow.SimplePresentSPS,
-			ThirdPersonSingular:  verbRow.SimplePresentTPS,
-			FirstPersonPlural:    verbRow.SimplePresentFPP,
-			SecondPersonPlural:   verbRow.SimplePresentSPP,
-			ThirdPersonPlural:    verbRow.SimplePresentTPP,
+			FirstPersonSingular:  verbRow.PresenteDoIndicativoEu,
+			SecondPersonSingular: verbRow.PresenteDoIndicativoTu,
+			ThirdPersonSingular:  verbRow.PresenteDoIndicativoVoceEleEla,
+			FirstPersonPlural:    verbRow.PresenteDoIndicativoNos,
+			SecondPersonPlural:   verbRow.PresenteDoIndicativoVos,
+			ThirdPersonPlural:    verbRow.PresenteDoIndicativoVocesElesElas,
 		},
 		ImperfectPast: model.VerbConjugations{
 			FirstPersonSingular:  verbRow.ImperfectPastFPS,
