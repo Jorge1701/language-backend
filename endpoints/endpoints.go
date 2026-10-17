@@ -2,16 +2,19 @@ package endpoints
 
 import (
 	"language-backend/database"
+	"language-backend/generator"
 )
 
 type Handler struct {
-	db     *database.Database
-	isProd bool
+	db        *database.Database
+	generator *generator.Generator
+	isProd    bool
 }
 
-func NewEndpointHandler(db *database.Database, isProd bool) *Handler {
+func NewEndpointHandler(db *database.Database, generator *generator.Generator, isProd bool) *Handler {
 	return &Handler{
-		db:     db,
-		isProd: isProd,
+		db:        db,
+		generator: generator,
+		isProd:    isProd,
 	}
 }
