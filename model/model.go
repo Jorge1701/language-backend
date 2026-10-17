@@ -68,23 +68,23 @@ type VerbExerciseInfo struct {
 }
 
 type VerbInfo struct {
-	Type             string           `json:"type"`
-	Infinitive       string           `json:"infinitive,omitempty"`
-	PresentPaticiple string           `json:"present_participle,omitempty"`
-	PastParticiple   string           `json:"past_participle,omitempty"`
-	SimplePresent    VerbConjugations `json:"simple_present"`
-	ImperfectPast    VerbConjugations `json:"imperfect_past"`
-	SimplePast       VerbConjugations `json:"simple_past"`
-	PastPerfect      VerbConjugations `json:"past_perfect"`
-	SimpleFuture     VerbConjugations `json:"simple_future"`
-	Conditional      VerbConjugations `json:"conditional"`
+	Type                                 string           `json:"type"`
+	Infinitive                           string           `json:"infinitive,omitempty"`
+	PresentPaticiple                     string           `json:"present_participle,omitempty"`
+	PastParticiple                       string           `json:"past_participle,omitempty"`
+	PresenteDoIndicativo                 VerbConjugations `json:"presente_do_indicativo"`
+	PreteritoImperfeitoDoIndicativo      VerbConjugations `json:"preterito_imperfeito_do_indicativo"`
+	PreteritoPerfeitoDoIndicativo        VerbConjugations `json:"preterito_perfeito_do_indicativo"`
+	PreteritoMaisQuePerfeitoDoIndicativo VerbConjugations `json:"preterito_mais_que_perfeito_do_indicativo"`
+	FuturoDoPresenteDoIndicativo         VerbConjugations `json:"futuro_do_presente_do_indicativo"`
+	FuturoDoPreteritoDoIndicativo        VerbConjugations `json:"futuro_do_preterito_do_indicativo"`
 }
 
 type VerbConjugations struct {
-	FirstPersonSingular  string `json:"fps"`
-	SecondPersonSingular string `json:"sps"`
-	ThirdPersonSingular  string `json:"tps"`
-	FirstPersonPlural    string `json:"fpp"`
-	SecondPersonPlural   string `json:"spp"`
-	ThirdPersonPlural    string `json:"tpp"`
+	Eu            string `json:"eu"`
+	Tu            string `json:"tu"`
+	VoceEleEla    string `json:"voce_ele_ela"`
+	Nos           string `json:"nos"`
+	Vos           string `json:"vos"`
+	VocesElesElas string `json:"voces_eles_elas"`
 }
