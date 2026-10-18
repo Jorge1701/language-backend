@@ -64,12 +64,18 @@ func (h *Handler) VerbExercise(w http.ResponseWriter, r *http.Request) {
 	}
 
 	pronoun := getPronounText(pronounParam)
+	example, err := h.findExample(tenseParam, pronoun, verbParam)
+	if err != nil {
+		response500(w, r, err)
+		return
+	}
+
 	verbExerciseInfo := model.VerbExerciseInfo{
 		Tense:       tenseParam,
 		Pronoun:     pronoun,
 		Verb:        verbParam,
 		Conjugation: conjugation,
-		Example:     h.findExample(pronoun, conjugation),
+		Example:     example,
 	}
 
 	response200(w, r, verbExerciseInfo)
@@ -83,37 +89,21 @@ func handleError(w http.ResponseWriter, r *http.Request, err error) {
 	}
 }
 
-func (h *Handler) findExample(pronoun, conjugation string) *model.ExerciseExample {
-	examples, err := h.db.FindVerbExample(pronoun, conjugation)
+func (h *Handler) findExample(tense model.Tense, pronoun, verb string) (*model.ExerciseExample, error) {
+	examples, err := h.db.FindVerbExample(tense, pronoun, verb)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
-	curatedExamples := []model.ExerciseExample{}
-
-	for _, example := range examples {
-		parts := strings.Split(strings.ToLower(strings.TrimSpace(example.Pt)), " ")
-
-	parts_loop:
-		for i, part := range parts {
-			if part == pronoun {
-				if len(parts) > i+1 && parts[i+1] == conjugation {
-					curatedExamples = append(curatedExamples, model.ExerciseExample{
-						Pt: example.Pt,
-						Es: example.Es,
-					})
-				}
-
-				break parts_loop
-			}
-		}
+	if len(examples) == 0 {
+		return nil, nil
 	}
 
-	if len(curatedExamples) == 0 {
-		return nil
-	}
-
-	return &curatedExamples[rand.Intn(len(curatedExamples))]
+	example := examples[rand.Intn(len(examples))]
+	return &model.ExerciseExample{
+		Pt: example.Pt,
+		Es: example.Es,
+	}, nil
 }
 
 var (

@@ -116,14 +116,14 @@ func (db *Database) FindRandomVerb(topSearched int) (VerbRow, error) {
 	return extractVerbRow(row)
 }
 
-func (db *Database) FindVerbExample(pronoun, conjugation string) ([]ExampleRow, error) {
-	search := fmt.Sprintf("%s %s", pronoun, conjugation)
-	query := `SELECT pt, es FROM examples WHERE lower(pt) like ?`
+func (db *Database) FindVerbExample(tense model.Tense, pronoun, verb string) ([]ExampleRow, error) {
+	query := `SELECT pt, es FROM verb_examples WHERE tense = ? AND pronoun = ? AND infinitive_verb = ?`
 
-	rows, err := db.db.Query(query, "%"+search+"%")
+	rows, err := db.db.Query(query, tense, pronoun, verb)
 	if err != nil {
 		return nil, mapError(err)
 	}
+	defer rows.Close()
 
 	examples := []ExampleRow{}
 	for rows.Next() {
@@ -134,7 +134,7 @@ func (db *Database) FindVerbExample(pronoun, conjugation string) ([]ExampleRow, 
 		examples = append(examples, example)
 	}
 
-	return examples, nil
+	return examples, rows.Err()
 }
 
 func (db *Database) FindUserByUsername(username string) (User, error) {
